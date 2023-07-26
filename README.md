@@ -15,5 +15,7 @@ Text data is tokenized using tiktoken library, batched and fed into RNN. Model w
 
 ## Weights
 Results of my first training are available under this URL: 
+
 https://drive.google.com/file/d/1fPxhkbmFKWjIONkvGh-bJahJX-7ZnTNM/view?usp=sharing
+
 SHA256: 57cb39b361c8280e20c5446ad19f3944d4d50775532f63d7805d8053918798e0
