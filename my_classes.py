@@ -1,9 +1,11 @@
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import tiktoken
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 from torch.utils.data import Dataset
+import torch.nn.functional as F
+import torch.nn as nn
 
 class ReviewsDataset(Dataset):
     def __init__(self, full_dataset, msl):
@@ -16,11 +18,11 @@ class ReviewsDataset(Dataset):
         assert(len(self.sentiment) == len(self.data))
         return len(self.sentiment)
     
-    def encode_data(self, selected_data):
+    def encode_data(self, selected_data):        
         encoded_data = []
         for sd in selected_data:
             encoded_data.append(self.encoder.encode(sd))
-            
+        
         truncated_data = []
         for e in encoded_data:
             if len(e) < self.msl:
@@ -28,8 +30,10 @@ class ReviewsDataset(Dataset):
                 for i in range(to_add):
                     e.append(220)
                 truncated_data.append(e)
-            if len(e) > self.msl:
+            elif len(e) > self.msl:
                 truncated_data.append(e[:self.msl])
+            elif len(e) == self.msl:
+                truncated_data.append(e)
         return truncated_data
     
     def __getitem__(self, idx):
@@ -40,7 +44,7 @@ class ReviewsDataset(Dataset):
         encoded_data = self.encode_data(selected_data)
         inputs = np.array(encoded_data).astype('float32')
         inputs = torch.tensor(inputs)
-        
+
         targets = self.sentiment[idx]
         targets = np.array(targets).astype('int32')
         targets = torch.tensor(targets)
