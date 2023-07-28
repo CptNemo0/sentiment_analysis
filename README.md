@@ -9,9 +9,12 @@ This repository contains code in python that can classify a short text as a "pos
 
 ## Accuracy
 First training - 84%
+Second training - 86%
 
 ## Training
 Text data is tokenized using tiktoken library, batched and fed into RNN. Model was not pretrained, nor it was finetuned. 
+
+Before next training I used dataset that contained positive and negative words, and conducted pretraining. Than I trained on imdb dataset. I got better results after fewer epochs.
 
 ## Weights
 Results of my first training are available under this URL: 
